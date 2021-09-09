@@ -35,7 +35,7 @@ class MyClient(discord.Client):
         await message.channel.send(rolled_num)
         num -= 1
 
-      await message.channel.send('total val is ' + str(total))  
+      await message.channel.send(f'{str(message.author)} rolled a total of ' + str(total))  
       return total
 
   async def on_message(self, message):
@@ -45,31 +45,11 @@ class MyClient(discord.Client):
     
     msg = message.content
 
-    # if msg.startswith('/hey'):
-    #   await message.channel.send(f'Hello it is I {self.user.name}')
+    if msg.startswith('/hey'):
+      await message.channel.send(f'Hello it is I {self.user.name}')
     
-    # if msg.startswith('/roll'):
-    #   roll = msg.split('/roll', 1)[1]
-
-    #   if(roll.split('d')[0] == " " or roll.split('d')[0] == "" ):
-    #     num = 1
-    #   else:
-    #     num = int(roll.split('d')[0])
-
-    #   sides = int(roll.split('d')[1])
-
-    #   await message.channel.send(str(message.author) + " rolled " +str(roll))
-      
-    #   total = 0
-
-    #   while num > 0:
-    #     rolled_num = random.randint(1,sides)
-    #     total = rolled_num + total
-    #     await message.channel.send(rolled_num)
-    #     num -= 1
-
-    #   await message.channel.send('total val is ' + str(total))  
-    #   return total
+    if msg.startswith('/roll'):
+      await self.dice(msg, message)
 
 ### build character sheet with charsheet class
     if msg.startswith('/create-char'):
