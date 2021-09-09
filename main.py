@@ -7,47 +7,6 @@ import json
 import random
 import asyncio
 
-### Client 
-# client = discord.Client()
-
-##### charsheet class
-
-class Charsheet:
-
-
-
-  def __init__(self, sheet):
-  #  name, look, armor, hitpoints, damage, strength, dexterity, constitution, inteligence, wisdom, charisma ):
-      self.sheet = {
-        "name": '',
-        "look": '',
-        "armor": 0,
-        "hitpoints": 0, 
-        "damage": 0,
-        "strength": 0,
-        "dexterity": 0,
-        "constitution": 0,
-        "inteligence": 0,
-        "wisdom": 0,
-        "charisma": 0
-      }
-    # self.name = ""
-    # self.look = ""
-    # self.armor = 0
-    # self.hitpoints = 0 
-    # self.damage = 0
-    # self.strength = 0
-    # self.dexterity = 0
-    # self.constitution = 0
-    # self.inteligence = 0
-    # self.wisdom = 0
-    # self.charisma = 0
-
-  def generate(self):
-    print ("this function will build out the chacter sheet with the players dice roll when we instansiate a need instance of the charsheet class")
-    ## we can shave the final instance of the new class in the DB under a key with the message sender how starts this process name
-   
-
 ### bot/ client  class 
 class MyClient(discord.Client):
 
@@ -114,86 +73,82 @@ class MyClient(discord.Client):
 ### build character sheet with charsheet class
     if msg.startswith('/create-char'):
 
-      # player_vars = []
-      player_sheet = Charsheet({})
+      player_sheet = {
+        "name": '',
+        "look": '',
+        "armor": 0,
+        "hitpoints": 0, 
+        "damage": 0,
+        "strength": 0,
+        "dexterity": 0,
+        "constitution": 0,
+        "inteligence": 0,
+        "wisdom": 0,
+        "charisma": 0
+      }
+
 
       await message.channel.send('Hello Travler')
-      # player_sheet.generate() should this be a function on the sheet or should we loop over the player_shet var, or just build and array that follows the sheet patterna and then spread that array into the player sheet var and save in DB. 
       await message.channel.send('What is your name ?')
       name = await client.wait_for('message')
-      # player_vars.append(name.content)
-      player_sheet.sheet[name] = name.content
+
+      player_sheet["name"] = name.content
 
       await message.channel.send('Descibe your appearance.')
       look = await client.wait_for('message')
-      # player_vars.append(look.content)
-      player_sheet.sheet['look'] = look.content
+
+      player_sheet['look'] = look.content
 
       await message.channel.send('for now in character create roll without the /')
       # armor 
-      # player_vars.append(0)
-      player_sheet.sheet['armor'] = 0
+      player_sheet['armor'] = 0
       #hitpoints
-      # player_vars.append(0)
-      player_sheet.sheet['hitpoint'] = 0
+      player_sheet['hitpoint'] = 0
       #damage
-      # player_vars.append(0)
-      player_sheet.sheet['damage'] = 0
+      player_sheet['damage'] = 0
 
       await message.channel.send("roll for your strength")
       roll = await client.wait_for('message')
       dice_roll = await self.dice(roll.content, message)
 
-      # player_vars.append(dice_roll)
-      player_sheet.sheet['strength'] = dice_roll
+      player_sheet['strength'] = dice_roll
 
       await message.channel.send("roll for your dexterity")
       roll = await client.wait_for('message')
       dice_roll = await self.dice(roll.content, message)
 
-      # player_vars.append(dice_roll)
-      player_sheet.sheet['dexterity'] = dice_roll
+      player_sheet['dexterity'] = dice_roll
 
 
       await message.channel.send("roll for your constitution")
       roll = await client.wait_for('message')
       dice_roll = await self.dice(roll.content, message)
 
-      # player_vars.append(dice_roll)
-      player_sheet.sheet['contitution'] = dice_roll
+      player_sheet['contitution'] = dice_roll
 
 
       await message.channel.send("roll for your inteligence")
       roll = await client.wait_for('message')
       dice_roll = await self.dice(roll.content, message)
 
-      # player_vars.append(dice_roll)
-      player_sheet.sheet['inteligence'] = dice_roll
+      player_sheet['inteligence'] = dice_roll
 
 
       await message.channel.send("roll for your wisdom")
       roll = await client.wait_for('message')
       dice_roll = await self.dice(roll.content, message)
 
-      # player_vars.append(dice_roll)
-      player_sheet.sheet['wisdom'] = dice_roll
+      player_sheet['wisdom'] = dice_roll
 
 
       await message.channel.send("roll for your charisma")
       roll = await client.wait_for('message')
       dice_roll = await self.dice(roll.content, message)
 
-      # player_vars.append(dice_roll)
-      player_sheet.sheet['chrisma'] = dice_roll
+      player_sheet['chrisma'] = dice_roll
 
-
-      # player_sheet = Charsheet(*player_vars)
-
-      # await message.channel.send(player_sheet.keys())
       await message.channel.send('player sheet:')
-      await message.channel.send(player_sheet.sheet.items())
-      # for i in player_sheet.sheet:
-      #   await message.channel.send(f"{i} : {player_sheet[i]}")
+      await message.channel.send(player_sheet.items())
 
     
 
