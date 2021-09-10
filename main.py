@@ -47,6 +47,7 @@ class MyClient(discord.Client):
 
     if msg.startswith('/hey'):
       await message.channel.send(f'Hello it is I {self.user.name}')
+      await message.channel.send(db.keys())
     
     #on message starts with /roll run roll function without putting total into another function
     if msg.startswith('/roll'):
@@ -54,20 +55,31 @@ class MyClient(discord.Client):
 
     #view player player_sheet
     if msg.startswith('/view-sheet'):
-      if db[f'{message.author}']:
-          await message.channel.send(db[f'{message.author}'])
+
+      player = str(message.author)
+      keys = list(db.keys())
+
+      if player in keys:
+          await message.channel.send(dict(db[player]))
+
       else:
         await message.channel.send('You do not have a player sheet, create one by typing "/create-char" into the chat.')
 
   # delete character player_sheet
     if msg.startswith('/delete-character'):
       player = str(message.author)
-      if db[player]:
-          await message.channel.send(f"are you sure you want to delete your character {db[player'.value.name']}. Y/N")
+      data = db[player]
+
+      if data:
+          await message.channel.send(f"are you sure you want to delete your character {str(data['name'])} - Y / N ")
           answer = await client.wait_for('message')
 
-          if answer.upper() == 'Y':
-           print('okay ') 
+          if answer.content.upper() == 'Y':
+            await message.channel.send('your character sheet has been destroyed')
+            del db[player]
+          else:
+            await message.channel.send('character not deleted')
+            return 
 
       else:
         await message.channel.send('You do not have a player sheet, create one by typing "/create-char" into the chat.')
