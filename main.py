@@ -129,3 +129,8 @@ class MyClient(discord.Client):
 
 client = MyClient()
 client.run(os.environ['TOKEN'])
+
+    
+  
+
+
