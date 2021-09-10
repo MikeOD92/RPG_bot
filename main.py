@@ -48,11 +48,34 @@ class MyClient(discord.Client):
     if msg.startswith('/hey'):
       await message.channel.send(f'Hello it is I {self.user.name}')
     
+    #on message starts with /roll run roll function without putting total into another function
     if msg.startswith('/roll'):
       await self.dice(msg, message)
 
+    #view player player_sheet
+    if msg.startswith('/view-sheet'):
+      if db[f'{message.author}']:
+          await message.channel.send(db[f'{message.author}'])
+      else:
+        await message.channel.send('You do not have a player sheet, create one by typing "/create-char" into the chat.')
+
+  # delete character player_sheet
+    if msg.startswith('/delete-character'):
+      player = str(message.author)
+      if db[player]:
+          await message.channel.send(f"are you sure you want to delete your character {db[player'.value.name']}. Y/N")
+          answer = await client.wait_for('message')
+
+          if answer.upper() == 'Y':
+           print('okay ') 
+
+      else:
+        await message.channel.send('You do not have a player sheet, create one by typing "/create-char" into the chat.')
+
 ### build character sheet with charsheet class
     if msg.startswith('/create-char'):
+
+      player = message.author
 
       player_sheet = {
         "name": '',
@@ -70,7 +93,7 @@ class MyClient(discord.Client):
 
 
       await message.channel.send('Hello Travler')
-
+      await message.channel.send(player)
       for i in player_sheet:
         if i == "name":
           await message.channel.send('What is your name ?')
@@ -90,7 +113,10 @@ class MyClient(discord.Client):
 
       
       await message.channel.send('player sheet:')
-      await message.channel.send(player_sheet.items())
+      ## we can save the player sheet in the repl db or in whatever db we use in the final product
+      ## this line lets us save it under the players discord name in our database. 
+      db[player] = player_sheet
+      await message.channel.send(db[f"{player}"])
 
 client = MyClient()
 client.run(os.environ['TOKEN'])
