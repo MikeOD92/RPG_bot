@@ -17,7 +17,7 @@ class MyClient(discord.Client):
   
   async def dice(self, input, message):
       roll = input.split('roll', 1)[1]
-
+      
       if(roll.split('d')[0] == " " or roll.split('d')[0] == "" ):
         num = 1
       else:
@@ -29,11 +29,18 @@ class MyClient(discord.Client):
       
       total = 0
 
-      while num > 0:
+      # while num > 0:
+      #   rolled_num = random.randint(1,sides)
+      #   total = rolled_num + total
+      #   await message.channel.send(rolled_num)
+      #   num -= 1
+#############################
+      rolls = range(1,num + 1)
+
+      for n in rolls:
         rolled_num = random.randint(1,sides)
         total = rolled_num + total
         await message.channel.send(rolled_num)
-        num -= 1
 
       await message.channel.send(f'{str(message.author)} rolled a total of ' + str(total))  
       return total
@@ -47,7 +54,6 @@ class MyClient(discord.Client):
 
     if msg.startswith('/hey'):
       await message.channel.send(f'Hello it is I {self.user.name}')
-      await message.channel.send(db.keys())
     
     #on message starts with /roll run roll function without putting total into another function
     if msg.startswith('/roll'):
