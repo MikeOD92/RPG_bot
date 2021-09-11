@@ -61,11 +61,13 @@ class MyClient(discord.Client):
 
     #view player player_sheet
     if msg.startswith('/view-sheet'):
+
       player = str(message.author)
       keys = list(db.keys())
 
       if player in keys:
           await message.channel.send(dict(db[player]))
+
       else:
         await message.channel.send('You do not have a player sheet, create one by typing "/create-char" into the chat.')
 
@@ -84,6 +86,7 @@ class MyClient(discord.Client):
           else:
             await message.channel.send('character not deleted')
             return 
+
       else:
         await message.channel.send('You do not have a player sheet, create one by typing "/create-char" into the chat.')
 
