@@ -29,12 +29,6 @@ class MyClient(discord.Client):
       
       total = 0
 
-      # while num > 0:
-      #   rolled_num = random.randint(1,sides)
-      #   total = rolled_num + total
-      #   await message.channel.send(rolled_num)
-      #   num -= 1
-#############################
       rolls = range(1,num + 1)
 
       for n in rolls:
